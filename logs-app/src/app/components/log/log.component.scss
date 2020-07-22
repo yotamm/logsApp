@@ -1,0 +1,11 @@
+@import "src/styles";
+
+.log {
+  background-color: resolve-color('primary');
+  color: resolve-font-color('contrast');
+  min-height: 10em;
+
+  p {
+    white-space: pre-wrap;
+  }
+}
