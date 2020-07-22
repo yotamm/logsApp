@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-log',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./log.component.scss']
 })
 export class LogComponent implements OnInit {
+  @Input() content: string[] = [];
 
   constructor() { }
 

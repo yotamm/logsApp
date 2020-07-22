@@ -1,1 +1,5 @@
-<pre class="log"><p [appSanitizeAnsi]="'\u001b[91m registry request try #1 at 6:50:36 PM'"></p></pre>
+<pre class="log">
+  <ng-container *ngFor="let paragraph of content">
+    <p [appSanitizeAnsi]="paragraph"></p>
+  </ng-container>
+</pre>
