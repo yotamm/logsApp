@@ -1,4 +1,4 @@
-import {Directive, ElementRef, HostListener, Input} from '@angular/core';
+import {Directive, ElementRef, Input, Renderer2} from '@angular/core';
 import Convert from 'ansi-to-html';
 
 @Directive({
@@ -7,7 +7,11 @@ import Convert from 'ansi-to-html';
 export class SanitizeAnsiDirective {
   private sanitizer = new Convert();
 
-  constructor(private el: ElementRef) {
-    setTimeout(() => this.el.nativeElement.innerHTML = this.sanitizer.toHtml(this.el.nativeElement.innerHTML.toString()));
+  constructor(private el: ElementRef,
+              private renderer: Renderer2) { }
+
+  @Input('appSanitizeAnsi') set sanitize(text: string) {
+    const sanitized = this.sanitizer.toHtml(text);
+    this.renderer.setProperty(this.el.nativeElement, 'innerHTML', sanitized);
   }
 }
