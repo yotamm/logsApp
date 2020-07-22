@@ -1,0 +1,32 @@
+.step-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .step-graphic {
+    $size: 2em;
+    border-radius: 50%;
+    width: $size;
+    height: $size;
+
+    &.success {
+      background-color: resolve-status-color('success');
+    }
+
+    &.failure {
+      background-color: resolve-status-color('failure');
+    }
+
+    &.inProgress {
+      background-color: resolve-status-color('inProgress');
+    }
+
+    &.unknown {
+      background-color: resolve-status-color('unknown');
+    }
+  }
+
+  .step-name {
+    text-align: center;
+  }
+}

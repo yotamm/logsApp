@@ -1,5 +1,6 @@
 export enum Status {
   success,
   failure,
-  inProgress
+  inProgress,
+  unknown
 }

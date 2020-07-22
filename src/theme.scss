@@ -1,0 +1,46 @@
+$primary-color: #012456;
+$primary-font-color: #2C2C2C;
+$secondary-color: orange;
+$contrast-font-color: white;
+$success: #5cb85c;
+$failure: #cf000f;
+$in-progress: #5bc0de;
+$unknown: #aaaaaa;
+
+@function resolve-color($name) {
+  @if ($name == 'primary') {
+    @return $primary-color;
+  }
+
+  @if ($name == 'secondary') {
+    @return $secondary-color;
+  }
+}
+
+@function resolve-status-color($name) {
+  @if ($name == 'success') {
+    @return $success;
+  }
+
+  @if ($name == 'failure') {
+    @return $failure;
+  }
+
+  @if ($name == 'inProgress') {
+    @return $in-progress;
+  }
+
+  @if ($name == 'unknown') {
+    @return $unknown;
+  }
+}
+
+@function resolve-font-color($name) {
+  @if ($name == 'primary') {
+    @return $primary-font-color;
+  }
+
+  @if ($name == 'contrast') {
+    @return $contrast-font-color;
+  }
+}
