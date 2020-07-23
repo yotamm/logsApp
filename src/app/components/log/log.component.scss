@@ -1,11 +1,27 @@
 @import "src/styles";
 
-.log {
+pre {
   background-color: resolve-color('primary');
   color: resolve-font-color('contrast');
-  min-height: 10em;
+  counter-reset: line;
+  padding: 1em;
+  white-space: pre-wrap;
+  line-height: 1.5em;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
 
   p {
-    white-space: pre-wrap;
+    margin: 0;
+
+    &::before {
+      counter-increment: line;
+      content: counter(line);
+      user-select: none;
+      padding-right: 1em;
+      width: 4em;
+      color: resolve-font-color('secondary');
+      display: inline-block;
+    }
   }
 }

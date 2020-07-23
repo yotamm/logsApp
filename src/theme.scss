@@ -43,6 +43,10 @@ $unknown: #aaaaaa;
   @if ($name == 'contrast') {
     @return $contrast-font-color;
   }
+
+  @if ($name == 'secondary') {
+    @return $secondary-color;
+  }
 }
 
 @mixin bg-color-by-status {
