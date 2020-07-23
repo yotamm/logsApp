@@ -1,4 +1,3 @@
-<div class="step-container">
-  <div [ngClass]="['step-graphic', step.status.toString()]"></div>
+<a [ngClass]="['step-container', step.status.toString()]" [routerLink]="step.name" routerLinkActive="selected-step">
   <div class="step-name">{{step.name}}</div>
-</div>
+</a>

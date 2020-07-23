@@ -1,9 +1,16 @@
+@import "../../../theme";
+
 .progress-bar-container {
   display: flex;
   justify-content: center;
   align-items: center;
 
   .progress-pipe {
+    $height: 1em;
+    width: 5em;
+    height: $height;
+    border-radius: calc(0.5 * #{$height});
 
+    @include bg-color-by-status;
   }
 }

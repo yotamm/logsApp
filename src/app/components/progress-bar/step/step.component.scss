@@ -1,32 +1,22 @@
+@import "../../../../theme";
+
 .step-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  $size: 6em;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
 
-  .step-graphic {
-    $size: 2em;
-    border-radius: 50%;
-    width: $size;
-    height: $size;
-
-    &.success {
-      background-color: resolve-status-color('success');
-    }
-
-    &.failure {
-      background-color: resolve-status-color('failure');
-    }
-
-    &.inProgress {
-      background-color: resolve-status-color('inProgress');
-    }
-
-    &.unknown {
-      background-color: resolve-status-color('unknown');
-    }
-  }
+  @include bg-color-by-status;
 
   .step-name {
     text-align: center;
   }
+}
+
+.selected-step {
+  border: 4px solid resolve-color('primary');
 }

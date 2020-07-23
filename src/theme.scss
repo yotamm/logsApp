@@ -1,6 +1,6 @@
 $primary-color: #012456;
 $primary-font-color: #2C2C2C;
-$secondary-color: orange;
+$secondary-color: #fefbea;
 $contrast-font-color: white;
 $success: #5cb85c;
 $failure: #cf000f;
@@ -42,5 +42,23 @@ $unknown: #aaaaaa;
 
   @if ($name == 'contrast') {
     @return $contrast-font-color;
+  }
+}
+
+@mixin bg-color-by-status {
+  &.success {
+    background-color: resolve-status-color('success');
+  }
+
+  &.failure {
+    background-color: resolve-status-color('failure');
+  }
+
+  &.inProgress {
+    background-color: resolve-status-color('inProgress');
+  }
+
+  &.unknown {
+    background-color: resolve-status-color('unknown');
   }
 }

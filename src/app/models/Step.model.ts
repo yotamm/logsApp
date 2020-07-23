@@ -5,5 +5,5 @@ export interface Step {
   finishTimeStamp?: number;
   logs: string[];
   name: string;
-  status?: Status;
+  status: Status;
 }
