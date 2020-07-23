@@ -9,11 +9,17 @@
   width: $size;
   height: $size;
   border-radius: 50%;
+  text-decoration: none;
+
+  &:hover {
+    border: 4px solid resolve-color('secondary');
+  }
 
   @include bg-color-by-status;
 
   .step-name {
-    text-align: center;
+    color: resolve-font-color('primary');
+    font-weight: bold;
   }
 }
 
