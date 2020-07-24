@@ -20,6 +20,11 @@ export class BuildInfoService {
     return this.wsService.getWebSocket();
   }
 
+  requestStepLog(stepId: string): void {
+    const jsonPayload = JSON.stringify({stepId: stepId});
+    this.wsService.getWebSocket().next(jsonPayload);
+  }
+
   getBuildInfo(): Observable<BuildMetaData> {
     const url = this.getFullUrl('steps');
     return this.http.get<BuildMetaData>(url);

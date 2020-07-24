@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {BuildInfoService} from "../../services/build-info.service";
 import {ActivatedRoute, ActivatedRouteSnapshot, ActivationEnd, Router} from "@angular/router";
 import {filter, takeUntil} from "rxjs/operators";
-import {Subject, Subscription} from "rxjs";
+import {Subject} from "rxjs";
 import {WebSocketSubject} from "rxjs/webSocket";
 
 @Component({
@@ -34,12 +34,12 @@ export class LogComponent implements OnInit, OnDestroy {
     this.logStream$ = this.buildInfoService.getLogStream();
     this.logStream$.pipe(takeUntil(this.unsubscribe$)).subscribe(this.handleLogUpdate);
     this.stepId = this.getStepId(this.route.snapshot);
-    this.logStream$.next(this.stepId);
+    this.buildInfoService.requestStepLog(this.stepId);
 
     this.router.events.pipe(takeUntil(this.unsubscribe$), filter(event => event instanceof ActivationEnd))
       .subscribe((event: ActivationEnd) => {
         this.stepId = this.getStepId(event.snapshot);
-        this.logStream$.next(this.stepId);
+        this.buildInfoService.requestStepLog(this.stepId);
       });
   }
 
