@@ -48,6 +48,7 @@ function sendLogs(connection, stepId) {
   if (stepId >= 0 && stepId < data.logs.length && stepId !== null) {
     if (timeoutIds.length > 0) {
       timeoutIds.forEach(id => clearTimeout(id));
+      timeoutIds.length = 0;
     }
     const log = data.logs[stepId];
     for (let i = 0; i < log.length; i++) {
