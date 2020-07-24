@@ -1,8 +1,8 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {BuildInfoService} from "../../services/build-info.service";
 import {ActivatedRoute, ActivatedRouteSnapshot, ActivationEnd, Router} from "@angular/router";
-import {filter} from "rxjs/operators";
-import {Subscription} from "rxjs";
+import {filter, takeUntil} from "rxjs/operators";
+import {Subject, Subscription} from "rxjs";
 import {WebSocketSubject} from "rxjs/webSocket";
 
 @Component({
@@ -14,8 +14,7 @@ export class LogComponent implements OnInit, OnDestroy {
   content: string[] = [];
   stepId: string;
   logStream$: WebSocketSubject<string>;
-  routeChangeSub$: Subscription;
-  logStreamSub$: Subscription;
+  unsubscribe$ = new Subject<void>();
 
   constructor(private buildInfoService: BuildInfoService,
               private router: Router,
@@ -33,10 +32,11 @@ export class LogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.logStream$ = this.buildInfoService.getLogStream();
-    this.logStreamSub$ = this.logStream$.subscribe(this.handleLogUpdate);
+    this.logStream$.pipe(takeUntil(this.unsubscribe$)).subscribe(this.handleLogUpdate);
     this.stepId = this.getStepId(this.route.snapshot);
+    this.logStream$.next(this.stepId);
 
-    this.routeChangeSub$ = this.router.events.pipe(filter(event => event instanceof ActivationEnd))
+    this.router.events.pipe(takeUntil(this.unsubscribe$), filter(event => event instanceof ActivationEnd))
       .subscribe((event: ActivationEnd) => {
         this.stepId = this.getStepId(event.snapshot);
         this.logStream$.next(this.stepId);
@@ -44,8 +44,8 @@ export class LogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.logStreamSub$.unsubscribe();
-    this.routeChangeSub$.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }
