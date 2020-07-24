@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from "@angular/common/http";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './pages/home/home.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { LogComponent } from './components/log/log.component';
@@ -22,7 +22,7 @@ import { SanitizeAnsiDirective } from './directives/sanitize-ansi.directive';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NoopAnimationsModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
