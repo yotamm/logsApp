@@ -16,7 +16,7 @@ export class WebSocketService {
     }
   }
 
-  getWebSocket(): WebSocketSubject<string> {
+  getWebSocket(): WebSocketSubject<any> {
     this.connect();
     return this.socket$;
   }

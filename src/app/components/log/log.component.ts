@@ -19,7 +19,8 @@ export class LogComponent implements OnInit, OnDestroy {
   constructor(private buildInfoService: BuildInfoService,
               private router: Router,
               private route: ActivatedRoute,
-              private changeDetectorRef: ChangeDetectorRef) { }
+              private changeDetectorRef: ChangeDetectorRef) {
+  }
 
   private handleLogUpdate(newLine: string) {
     this.content.push(newLine);
@@ -32,14 +33,19 @@ export class LogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.logStream$ = this.buildInfoService.getLogStream();
-    this.logStream$.pipe(takeUntil(this.unsubscribe$)).subscribe(this.handleLogUpdate);
+    this.logStream$.pipe(takeUntil(this.unsubscribe$)).subscribe(this.handleLogUpdate.bind(this));
     this.stepId = this.getStepId(this.route.snapshot);
     this.buildInfoService.requestStepLog(this.stepId);
 
     this.router.events.pipe(takeUntil(this.unsubscribe$), filter(event => event instanceof ActivationEnd))
       .subscribe((event: ActivationEnd) => {
-        this.stepId = this.getStepId(event.snapshot);
-        this.buildInfoService.requestStepLog(this.stepId);
+        const id = this.getStepId(event.snapshot);
+        if (id !== null) {
+          this.stepId = id;
+          this.content = [];
+          this.buildInfoService.requestStepLog(this.stepId);
+        }
+
       });
   }
 

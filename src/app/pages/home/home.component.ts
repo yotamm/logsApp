@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {BuildInfoService} from "../../services/build-info.service";
+import {Step} from "../../models/Step.model";
 
 @Component({
   selector: 'app-home',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  buildInfo: Step[];
 
-  constructor() { }
+  constructor(private buildInfoService: BuildInfoService) { }
 
   ngOnInit(): void {
+    this.buildInfoService.getBuildInfo().subscribe(response => this.buildInfo = response);
+
   }
 
 }

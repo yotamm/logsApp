@@ -1,0 +1,15 @@
+{
+  "name": "mock_server",
+  "version": "1.0.0",
+  "description": "providing a backend to work againt for the frontend assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Yotam Ronen",
+  "license": "ISC",
+  "dependencies": {
+    "websocket": "^1.0.31"
+  }
+}

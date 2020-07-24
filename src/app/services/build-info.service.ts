@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {WebSocketService} from "./web-socket.service";
 import {WebSocketSubject} from "rxjs/webSocket";
 import {environment} from '../../environments/environment';
+import {Step} from "../models/Step.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +17,17 @@ export class BuildInfoService {
               private wsService: WebSocketService) {
   }
 
-  getLogStream(): WebSocketSubject<string> {
+  getLogStream(): WebSocketSubject<any> {
     return this.wsService.getWebSocket();
   }
 
   requestStepLog(stepId: string): void {
-    const jsonPayload = JSON.stringify({stepId: stepId});
-    this.wsService.getWebSocket().next(jsonPayload);
+    this.wsService.getWebSocket().next({stepId: stepId});
   }
 
-  getBuildInfo(): Observable<BuildMetaData> {
-    const url = this.getFullUrl('steps');
-    return this.http.get<BuildMetaData>(url);
+  getBuildInfo(): Observable<Step[]> {
+    const url = this.getFullUrl('build-info');
+    return this.http.get<any>(url);
   }
 
   private getFullUrl(url): string {
