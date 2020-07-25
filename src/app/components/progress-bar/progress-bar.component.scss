@@ -2,16 +2,7 @@
 
 .progress-bar-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .progress-pipe {
-    $height: 1em;
-    width: 5em;
-    height: $height;
-    border-radius: calc(0.5 * #{$height});
-    margin: 0 4px;
-
-    @include bg-color-by-status;
-  }
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
 }

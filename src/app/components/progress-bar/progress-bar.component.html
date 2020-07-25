@@ -1,6 +1,3 @@
 <div class="progress-bar-container">
-  <ng-container *ngFor="let step of steps; let i = index">
-    <app-step [step]="step"></app-step>
-    <div *ngIf="i < steps.length - 1" [ngClass]="['progress-pipe', steps[i+1].status.toString()]"></div>
-  </ng-container>
+  <app-step *ngFor="let step of steps; let i = index" [step]="step"></app-step>
 </div>

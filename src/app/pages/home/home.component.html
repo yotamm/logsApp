@@ -1,5 +1,7 @@
 <div class="home-container">
-  <app-progress-bar [steps]="buildInfo"></app-progress-bar>
+  <div class="progress-container">
+    <app-progress-bar [steps]="buildInfo"></app-progress-bar>
+  </div>
   <div class="logs-container">
     <router-outlet></router-outlet>
   </div>

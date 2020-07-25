@@ -1,4 +1,14 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef, OnChanges,
+  OnDestroy,
+  OnInit,
+  Renderer2, SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {BuildInfoService} from "../../services/build-info.service";
 import {ActivatedRoute, ActivatedRouteSnapshot, ActivationEnd, Router} from "@angular/router";
 import {filter, takeUntil} from "rxjs/operators";
@@ -10,15 +20,19 @@ import {WebSocketSubject} from "rxjs/webSocket";
   templateUrl: './log.component.html',
   styleUrls: ['./log.component.scss']
 })
-export class LogComponent implements OnInit, OnDestroy {
+export class LogComponent implements OnInit, OnDestroy, AfterViewChecked {
   content: string[] = [];
-  stepId: string;
-  logStream$: WebSocketSubject<string>;
-  unsubscribe$ = new Subject<void>();
+  private stepId: string;
+  private logStream$: WebSocketSubject<string>;
+  private unsubscribe$ = new Subject<void>();
+
+  @ViewChild("logRef") logRef: ElementRef;
+  isStickyScrolling: boolean = true;
 
   constructor(private buildInfoService: BuildInfoService,
               private router: Router,
               private route: ActivatedRoute,
+              private renderer: Renderer2,
               private changeDetectorRef: ChangeDetectorRef) {
   }
 
@@ -30,6 +44,8 @@ export class LogComponent implements OnInit, OnDestroy {
   private getStepId(snapshot: ActivatedRouteSnapshot): string {
     return snapshot.paramMap.get('stepId');
   }
+
+  toggleStickyScrolling() {this.isStickyScrolling = !this.isStickyScrolling;}
 
   ngOnInit(): void {
     this.logStream$ = this.buildInfoService.getLogStream();
@@ -54,4 +70,10 @@ export class LogComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  ngAfterViewChecked(): void {
+    if (this.isStickyScrolling && this.logRef) {
+      const el = this.logRef.nativeElement;
+      el.scrollTop = Math.max(0, el.scrollHeight - el.offsetHeight);
+    }
+  }
 }
