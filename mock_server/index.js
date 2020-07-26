@@ -73,7 +73,7 @@ function randomizeSendingTime(connection, stepId) {
       const start = i;
       const end = (i + chunkSize < logIndices[stepId]) ? i + chunkSize : logIndices[stepId];
       timeoutIds.push(setTimeout(() => {
-        connection.send(JSON.stringify({performed: log.slice(start, end + 1)}));
+        connection.send(JSON.stringify({performed: log.slice(start, end + 1), stepId: stepId}));
       }, 0));
     }
   }
@@ -81,7 +81,7 @@ function randomizeSendingTime(connection, stepId) {
     const delay = Math.floor(Math.random() * 1000 * i);
     timeoutIds.push(setTimeout(() => {
       logIndices[stepId]++;
-      connection.send(JSON.stringify({line: log[i]}));
+      connection.send(JSON.stringify({line: log[i], stepId: stepId}));
       updateStepStatus(stepId);
     }, delay));
   }
