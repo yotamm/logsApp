@@ -9,6 +9,7 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
 import { LogComponent } from './components/log/log.component';
 import { StepComponent } from './components/progress-bar/step/step.component';
 import { SanitizeAnsiDirective } from './directives/sanitize-ansi.directive';
+import { ButtonComponent } from './components/button/button.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { SanitizeAnsiDirective } from './directives/sanitize-ansi.directive';
     LogComponent,
     StepComponent,
     SanitizeAnsiDirective,
+    ButtonComponent,
   ],
   imports: [
     BrowserModule,

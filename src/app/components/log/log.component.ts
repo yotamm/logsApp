@@ -36,9 +36,16 @@ export class LogComponent implements OnInit, OnDestroy, AfterViewChecked {
               private changeDetectorRef: ChangeDetectorRef) {
   }
 
-  private handleLogUpdate(newLine: string) {
-    this.content.push(newLine);
-    this.changeDetectorRef.detectChanges();
+  private handleLogUpdate(message) {
+    if (message.hasOwnProperty('line')) {
+      const {line} = message;
+      this.content.push(line);
+      this.changeDetectorRef.detectChanges();
+    } else if (message.hasOwnProperty('performed')) {
+      const {performed} = message;
+      this.content.push(...performed);
+      this.changeDetectorRef.detectChanges();
+    }
   }
 
   private getStepId(snapshot: ActivatedRouteSnapshot): string {

@@ -30,6 +30,11 @@ export class BuildInfoService {
     return this.http.get<any>(url);
   }
 
+  requestRebuild(): Observable<Step[]> {
+    const url = this.getFullUrl('restart-build');
+    return this.http.get<Step[]>(url);
+  }
+
   private getFullUrl(url): string {
     return this.baseUrl + url;
   }
