@@ -1,13 +1,10 @@
 import {
   AfterViewChecked,
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
-  ElementRef, OnChanges,
-  OnDestroy,
+  ElementRef, OnDestroy,
   OnInit,
-  Renderer2, SimpleChanges,
-  ViewChild
+  Renderer2, ViewChild
 } from '@angular/core';
 import {BuildInfoService} from "../../services/build-info.service";
 import {ActivatedRoute, ActivatedRouteSnapshot, ActivationEnd, Router} from "@angular/router";
