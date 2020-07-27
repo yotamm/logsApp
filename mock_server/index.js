@@ -2,7 +2,6 @@ const port = 8080;
 const timeoutIds = [];
 const logIndices = [];
 const mockSteps = [];
-let wsConnection;
 const fs = require('fs');
 const buildObj = JSON.parse(fs.readFileSync('mock_build.json', 'utf8'));
 const data = getMocks(buildObj);
@@ -29,7 +28,7 @@ server.listen(port, () => console.log('server is listening on port ' + port));
 //websocket requests
 const wsServer = new WebSocketServer({httpServer: server});
 wsServer.on('request', (request) => {
-  wsConnection = request.accept(null, request.origin);
+  const wsConnection = request.accept(null, request.origin);
   wsConnection.on('message', function (message) {
     console.log('Received Message: ', message.utf8Data);
     const {stepId} = JSON.parse(message.utf8Data);
@@ -82,7 +81,7 @@ function randomizeSendingTime(connection, stepId) {
     timeoutIds.push(setTimeout(() => {
       logIndices[stepId]++;
       connection.send(JSON.stringify({line: log[i], stepId: stepId}));
-      updateStepStatus(stepId);
+      updateStepStatus(connection, stepId);
     }, delay));
   }
 }
@@ -107,7 +106,7 @@ function clearMessages() {
   }
 }
 
-function updateStepStatus(stepId) {
+function updateStepStatus(connection, stepId) {
   if (mockSteps[stepId].status === 'inProgress' && logIndices[stepId] === data.logs[stepId].length - 1) {
     mockSteps[stepId].status = data.steps[stepId].status;
     if (mockSteps[stepId].status === 'success' && stepId < data.steps.length - 1) {
@@ -115,6 +114,6 @@ function updateStepStatus(stepId) {
       mockSteps[nextId].status = 'inProgress';
 
     }
-    wsConnection.send({statusUpdate: 'BUILD_STATUS_HAS_CHANGED'});
+    connection.send(JSON.stringify({statusUpdate: 'BUILD_STATUS_HAS_CHANGED'}));
   }
 }
