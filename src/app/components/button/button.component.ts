@@ -6,10 +6,6 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent implements OnInit {
-  @Input() imgSrc?: string;
-  @Input() text?: string;
-  @Input() styling?: {[prop: string]: any};
-
   constructor() { }
 
   ngOnInit(): void {

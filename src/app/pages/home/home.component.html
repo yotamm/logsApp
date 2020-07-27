@@ -1,9 +1,8 @@
 <div class="home-container">
   <div class="progress-container">
-    <app-button
-      (click)="requestRebuild()"
-      [imgSrc]="'refresh.svg'"
-      [text]="'Rebuild'"></app-button>
+    <app-button (click)="requestRebuild()">
+      <img [src]="'assets/refresh.svg'" style="margin-right: 0.5em"/><span>Rebuild</span>
+    </app-button>
     <app-progress-bar [steps]="buildInfo"></app-progress-bar>
   </div>
   <div class="logs-container">
