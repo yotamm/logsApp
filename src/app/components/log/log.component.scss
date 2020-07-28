@@ -45,8 +45,17 @@
     overflow: auto;
     position: relative;
 
-    p {
-      margin: 0;
+    .log-entry {
+      display: flex;
+
+      .entry-number {
+        user-select: none;
+        flex: 0 0 4em;
+        color: resolve-font-color('secondary');
+      }
+      p {
+        margin: 0;
+      }
     }
   }
 }

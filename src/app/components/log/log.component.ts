@@ -25,7 +25,7 @@ export class LogComponent implements OnInit, OnDestroy, AfterViewChecked {
   private unsubscribe$ = new Subject<void>();
 
   @ViewChild("logRef") logRef: ElementRef;
-  isStickyScrolling: boolean = false;
+  isStickyScrolling: boolean = true;
   visibleEntriesIndexStart: number = 0;
 
   constructor(private buildInfoService: BuildInfoService,

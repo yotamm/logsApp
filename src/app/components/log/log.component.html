@@ -8,8 +8,11 @@
     </ng-template>
   </button>
   <pre #logRef>
-    <virtual-scroller #logScrollerRef [items]="content" [parentScroll]="logRef" [enableUnequalChildrenSizes]="true">
-      <p *ngFor="let paragraph of logScrollerRef.viewPortItems" [appSanitizeAnsi]="paragraph"></p>
+    <virtual-scroller #logScrollerRef [items]="content" [parentScroll]="logRef" [enableUnequalChildrenSizes]="true" (vsStart)="visibleEntriesIndexStart = $event.startIndexWithBuffer">
+      <div class="log-entry" *ngFor="let paragraph of logScrollerRef.viewPortItems; let i=index">
+        <div class="entry-number">{{visibleEntriesIndexStart + i + 1}}</div>
+        <p [appSanitizeAnsi]="paragraph"></p>
+      </div>
     </virtual-scroller>
   </pre>
 </div>
