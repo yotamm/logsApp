@@ -21,7 +21,7 @@ export class BuildInfoService {
     return this.wsService.getWebSocket();
   }
 
-  requestStepLog(stepId: string): void {
+  requestStepLog(stepId: number): void {
     this.wsService.getWebSocket().next({stepId: stepId});
   }
 

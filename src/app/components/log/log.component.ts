@@ -11,6 +11,7 @@ import {ActivatedRoute, ActivatedRouteSnapshot, ActivationEnd, Router} from "@an
 import {filter, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {WebSocketSubject} from "rxjs/webSocket";
+import {Step} from "../../models/Step.model";
 
 @Component({
   selector: 'app-log',
@@ -19,7 +20,7 @@ import {WebSocketSubject} from "rxjs/webSocket";
 })
 export class LogComponent implements OnInit, OnDestroy, AfterViewChecked {
   content: string[] = [];
-  private stepId: string;
+  private stepId: Step['id'];
   private logStream$: WebSocketSubject<string>;
   private unsubscribe$ = new Subject<void>();
 
@@ -34,19 +35,21 @@ export class LogComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   private handleLogUpdate(message) {
-    if (message.hasOwnProperty('line')) {
-      const {line} = message;
-      this.content.push(line);
-      this.changeDetectorRef.detectChanges();
-    } else if (message.hasOwnProperty('performed')) {
-      const {performed} = message;
-      this.content.push(...performed);
-      this.changeDetectorRef.detectChanges();
+    if (message.stepId === this.stepId) {
+      if (message.hasOwnProperty('line')) {
+        const {line} = message;
+        this.content.push(line);
+        this.changeDetectorRef.detectChanges();
+      } else if (message.hasOwnProperty('performed')) {
+        const {performed} = message;
+        this.content.push(...performed);
+        this.changeDetectorRef.detectChanges();
+      }
     }
   }
 
-  private getStepId(snapshot: ActivatedRouteSnapshot): string {
-    return snapshot.paramMap.get('stepId');
+  private getStepId(snapshot: ActivatedRouteSnapshot): number {
+    return parseInt(snapshot.paramMap.get('stepId'));
   }
 
   toggleStickyScrolling() {this.isStickyScrolling = !this.isStickyScrolling;}
@@ -60,7 +63,7 @@ export class LogComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.router.events.pipe(takeUntil(this.unsubscribe$), filter(event => event instanceof ActivationEnd))
       .subscribe((event: ActivationEnd) => {
         const id = this.getStepId(event.snapshot);
-        if (id !== null) {
+        if (id !== null && !isNaN(id)) {
           this.stepId = id;
           this.content = [];
           this.buildInfoService.requestStepLog(this.stepId);

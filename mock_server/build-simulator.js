@@ -31,25 +31,32 @@ module.exports = class BuildSimulator {
   sendLogs(connection, stepId) {
     if (stepId !== null && stepId >= 0 && stepId < this.mockSteps.length) {
       if (this.mockSteps[stepId].status === 'success' || this.mockSteps[stepId].status === 'inProgress' || this.mockSteps[stepId].status === 'failure') {
-        this.randomizeSendingTime(connection, stepId);
+        this.generateLogStreamSimulation(connection, stepId);
       }
     }
   }
 
-  randomizeSendingTime(connection, stepId) {
+  generateLogStreamSimulation(connection, stepId) {
     this.clearMessages();
     const log = this.data.logs[stepId];
     if (this.logIndices[stepId] >= 0) {
-      // logs already generated. push to client quickly
-      const chunkSize = 100;
-      for (let i = 0; i <= this.logIndices[stepId]; i += chunkSize) {
-        const start = i;
-        const end = (i + chunkSize < this.logIndices[stepId]) ? i + chunkSize : this.logIndices[stepId];
-        this.timeoutIds.push(setTimeout(() => {
-          connection.send(JSON.stringify({performed: log.slice(start, end + 1), stepId: stepId}));
-        }, 0));
-      }
+      this.generateStreamOfPerformedLogs(connection, stepId, log);
     }
+    this.generateStreamOfUnperformedLogs(connection, stepId, log);
+  }
+
+  generateStreamOfPerformedLogs(connection, stepId, log) {
+    const chunkSize = 100;
+    for (let i = 0; i <= this.logIndices[stepId]; i += chunkSize) {
+      const start = i;
+      const end = (i + chunkSize < this.logIndices[stepId]) ? i + chunkSize : this.logIndices[stepId];
+      this.timeoutIds.push(setTimeout(() => {
+        connection.send(JSON.stringify({performed: log.slice(start, end + 1), stepId: stepId}));
+      }, 0));
+    }
+  }
+
+  generateStreamOfUnperformedLogs(connection, stepId, log) {
     for (let i = this.logIndices[stepId] + 1; i < log.length; i++) {
       const delay = Math.floor(Math.random() * 1000 * i);
       this.timeoutIds.push(setTimeout(() => {
@@ -83,10 +90,9 @@ module.exports = class BuildSimulator {
   updateStepStatus(connection, stepId) {
     if (this.mockSteps[stepId].status === 'inProgress' && this.logIndices[stepId] === this.data.logs[stepId].length - 1) {
       this.mockSteps[stepId].status = this.data.steps[stepId].status;
-      if (this.mockSteps[stepId].status === 'success' && stepId < data.steps.length - 1) {
+      if (this.mockSteps[stepId].status === 'success' && stepId < this.data.steps.length - 1) {
         const nextId = 1 + parseInt(stepId);
         this.mockSteps[nextId].status = 'inProgress';
-
       }
       connection.send(JSON.stringify({statusUpdate: 'BUILD_STATUS_HAS_CHANGED'}));
     }

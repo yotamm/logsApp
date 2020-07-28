@@ -9,7 +9,7 @@ const http = require('http');
 const WebSocketServer = require('websocket').server;
 const server = http.createServer((request, response) => {
   console.log('Received request for ' + request.url);
-  function prepResponse(response) {
+  function prepResponse() {
     response.writeHead(200, {'Content-Type': 'application/json'});
     response.writeHead(200, {'Access-Control-Allow-Origin': '*'});
   }
@@ -32,7 +32,7 @@ wsServer.on('request', (request) => {
   wsConnection.on('message', function (message) {
     console.log('Received Message: ', message.utf8Data);
     const {stepId} = JSON.parse(message.utf8Data);
-    buildSimulator.sendLogs(wsConnection, parseInt(stepId));
+    buildSimulator.sendLogs(wsConnection, stepId);
   });
   wsConnection.on('close', function (reasonCode, description) {
     console.log('Client has disconnected.');
