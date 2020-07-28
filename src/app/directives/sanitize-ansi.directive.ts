@@ -12,6 +12,6 @@ export class SanitizeAnsiDirective {
 
   @Input('appSanitizeAnsi') set sanitize(text: string) {
     const sanitized = this.sanitizer.toHtml(text);
-    this.renderer.setProperty(this.el.nativeElement, 'innerHTML', sanitized);
+    this.renderer.setProperty(this.el.nativeElement, 'innerHTML', sanitized === '' ? text.trim() : sanitized);
   }
 }

@@ -1,10 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BuildInfoService} from "../../services/build-info.service";
 import {Step} from "../../models/Step.model";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
-import {environment} from "../../../environments/environment";
+import {filter, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-home',
@@ -32,6 +31,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       if (message.hasOwnProperty('statusUpdate')) {
         this.getBuildInfo();
       }
+    });
+
+    this.router.events.pipe(takeUntil(this.unsubscribe$), filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      this.getBuildInfo();
     });
   }
 

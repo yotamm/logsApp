@@ -1,9 +1,11 @@
 <div class="home-container">
-  <div class="progress-container">
+  <div class="control-panel">
     <app-button (click)="requestRebuild()">
       <img [src]="'assets/refresh.svg'" style="margin-right: 0.5em"/><span>Rebuild</span>
     </app-button>
-    <app-progress-bar [steps]="buildInfo"></app-progress-bar>
+    <div class="progress-bar">
+      <app-progress-bar [steps]="buildInfo"></app-progress-bar>
+    </div>
   </div>
   <div class="logs-container">
     <router-outlet></router-outlet>

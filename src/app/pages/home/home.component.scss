@@ -8,10 +8,16 @@
     height: 100%;
   }
 
-  .progress-container {
+  .control-panel {
     position: sticky;
     top: 0;
     flex: 0 0 auto;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .progress-bar {
+      flex: 1 1 auto;
+    }
   }
 }

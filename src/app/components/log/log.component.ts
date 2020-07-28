@@ -25,25 +25,22 @@ export class LogComponent implements OnInit, OnDestroy, AfterViewChecked {
   private unsubscribe$ = new Subject<void>();
 
   @ViewChild("logRef") logRef: ElementRef;
-  isStickyScrolling: boolean = true;
+  isStickyScrolling: boolean = false;
+  visibleEntriesIndexStart: number = 0;
 
   constructor(private buildInfoService: BuildInfoService,
               private router: Router,
-              private route: ActivatedRoute,
-              private renderer: Renderer2,
-              private changeDetectorRef: ChangeDetectorRef) {
+              private route: ActivatedRoute) {
   }
 
   private handleLogUpdate(message) {
     if (message.stepId === this.stepId) {
       if (message.hasOwnProperty('line')) {
         const {line} = message;
-        this.content.push(line);
-        this.changeDetectorRef.detectChanges();
+        this.content = [...this.content, line];
       } else if (message.hasOwnProperty('performed')) {
         const {performed} = message;
-        this.content.push(...performed);
-        this.changeDetectorRef.detectChanges();
+        this.content = [...this.content, ...performed];
       }
     }
   }

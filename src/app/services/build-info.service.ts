@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
-import {BuildMetaData} from "../models/BuildMetaData.model";
 import {HttpClient} from "@angular/common/http";
 import {WebSocketService} from "./web-socket.service";
 import {WebSocketSubject} from "rxjs/webSocket";

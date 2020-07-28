@@ -1,14 +1,17 @@
-<pre #logRef class="log-container">
-  <div class="unseen-sticky">
-    <button class="stick-to-bottom" (click)="toggleStickyScrolling()">
-      <img *ngIf="isStickyScrolling; else pinImage"
-           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAAB0ElEQVRIibXXv48MURwA8M8dGxE/r7hCgkSE6IhO5S8QlxDF3qm0OjoqXA5XqlUaju6ExEUhCkInEgoE0fqVkOw5rOK9sXuzd7Nvdma/ycvkJe/tZ77vu/udWeqP8/iCG2j0W/wAzRrQU2h3jTtYW7ShicWK+F78yMFtzPXDT6CFqQHQBp6ugGbj9rDwqwXo0DI/jN8JcBu36sLH8DERXYavps8JdbuOpbh4M/Zje7ypTziHHX1ubqWkPvdbNBmRhXgtk1nR+FqEbhGym5Rew9QxUwQ/w1vsrBH/idMYKYIvxMV14U+EJpMUF+Om99glfDGWSoK/cFlC364Tf4mDZcHumFH+2GexrgqaRdnMK2WaxTjWC7VKzfxYVbSBx8Izuwx+vCp8revDHmEDLsX5B6sf+6Eq6JTeTBaEzK/E+Tu9mbewaVD0gNBp8vA9bI1rsudwHn84KDqGNznwr1DfNbm103qPvYWTZdFR3M+h3zFRsGdWJ/NtQuaL8Zoc2e81G6+wL2HfNO7qNI1S+BH86ULndeo5SCQd+x58s7yeoxXQJHyj0NCzeh6tAeyLjwjvVG28wO6a0Syymv//03A2ojeFrjTMaOJ5NnmNM0MGe+IfRJAvuSsipiMAAAAASUVORK5CYII="/>
-      <ng-template #pinImage>
-        <img
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABkUlEQVRIib3WMWsUQRgG4MfLCZpDiFhYWoSAhCDY2B3+ASGCkl5s04lFGpMmicT/IKIIwdhFRC3ERkithYmVYK8kQZBE71LsHq7nZW53btYXvua4+Z6d3Z2ZJX3u4Rue4GQN/QfmNrqFeo5m3egk9vrgLjbqxJvYGoD26lld+HIA7dU6xlKibfwqAXfxCI0U6AS+lER79RCNKvf9DC7hPA7xFQu4UPFib8lewqFp4yV+qjazUO2GwHE8TYgVay0Ev6sB/IF5nAjBK4nR95gKgcWUWZ/D6gBLItbwKPgHXK4KFrMWga5KdDpVnfmVFOg5nFZt5jdCDcvsXE3Z6fIbs/lvd0uMG/lAeODPLF4rP/P2KOgcOn0NX+HUEPxAtrdHZQb7A5q+wdn8P8fhm7HoBD73Nevgvn+f3SD8agzakF1xsdE+bgbGFPHHMSgs9qE7mC4xbgVv0YpBr8mWTQ99IbvttWYK3/39PJN8H4XSwscc3cX1ukGyQ3k9Rz/h4v9Ayba/bo5HvRix2cYdQz5HUucIk7EisonbRy0AAAAASUVORK5CYII="/>
-      </ng-template>
-    </button>
-  </div>
-  <p *ngFor="let paragraph of content" [appSanitizeAnsi]="paragraph"></p>
-</pre>
+<div class="log-container">
+  <button class="stick-to-bottom-button" (click)="toggleStickyScrolling()">
+    <img *ngIf="isStickyScrolling; else pinImage"
+         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAAB0ElEQVRIibXXv48MURwA8M8dGxE/r7hCgkSE6IhO5S8QlxDF3qm0OjoqXA5XqlUaju6ExEUhCkInEgoE0fqVkOw5rOK9sXuzd7Nvdma/ycvkJe/tZ77vu/udWeqP8/iCG2j0W/wAzRrQU2h3jTtYW7ShicWK+F78yMFtzPXDT6CFqQHQBp6ugGbj9rDwqwXo0DI/jN8JcBu36sLH8DERXYavps8JdbuOpbh4M/Zje7ypTziHHX1ubqWkPvdbNBmRhXgtk1nR+FqEbhGym5Rew9QxUwQ/w1vsrBH/idMYKYIvxMV14U+EJpMUF+Om99glfDGWSoK/cFlC364Tf4mDZcHumFH+2GexrgqaRdnMK2WaxTjWC7VKzfxYVbSBx8Izuwx+vCp8revDHmEDLsX5B6sf+6Eq6JTeTBaEzK/E+Tu9mbewaVD0gNBp8vA9bI1rsudwHn84KDqGNznwr1DfNbm103qPvYWTZdFR3M+h3zFRsGdWJ/NtQuaL8Zoc2e81G6+wL2HfNO7qNI1S+BH86ULndeo5SCQd+x58s7yeoxXQJHyj0NCzeh6tAeyLjwjvVG28wO6a0Syymv//03A2ojeFrjTMaOJ5NnmNM0MGe+IfRJAvuSsipiMAAAAASUVORK5CYII="/>
+    <ng-template #pinImage>
+      <img
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABkUlEQVRIib3WMWsUQRgG4MfLCZpDiFhYWoSAhCDY2B3+ASGCkl5s04lFGpMmicT/IKIIwdhFRC3ERkithYmVYK8kQZBE71LsHq7nZW53btYXvua4+Z6d3Z2ZJX3u4Rue4GQN/QfmNrqFeo5m3egk9vrgLjbqxJvYGoD26lld+HIA7dU6xlKibfwqAXfxCI0U6AS+lER79RCNKvf9DC7hPA7xFQu4UPFib8lewqFp4yV+qjazUO2GwHE8TYgVay0Ev6sB/IF5nAjBK4nR95gKgcWUWZ/D6gBLItbwKPgHXK4KFrMWga5KdDpVnfmVFOg5nFZt5jdCDcvsXE3Z6fIbs/lvd0uMG/lAeODPLF4rP/P2KOgcOn0NX+HUEPxAtrdHZQb7A5q+wdn8P8fhm7HoBD73Nevgvn+f3SD8agzakF1xsdE+bgbGFPHHMSgs9qE7mC4xbgVv0YpBr8mWTQ99IbvttWYK3/39PJN8H4XSwscc3cX1ukGyQ3k9Rz/h4v9Ayba/bo5HvRix2cYdQz5HUucIk7EisonbRy0AAAAASUVORK5CYII="/>
+    </ng-template>
+  </button>
+  <pre #logRef>
+    <virtual-scroller #logScrollerRef [items]="content" [parentScroll]="logRef" [enableUnequalChildrenSizes]="true">
+      <p *ngFor="let paragraph of logScrollerRef.viewPortItems" [appSanitizeAnsi]="paragraph"></p>
+    </virtual-scroller>
+  </pre>
+</div>
+
 

@@ -10,6 +10,7 @@ import { LogComponent } from './components/log/log.component';
 import { StepComponent } from './components/progress-bar/step/step.component';
 import { SanitizeAnsiDirective } from './directives/sanitize-ansi.directive';
 import { ButtonComponent } from './components/button/button.component';
+import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ButtonComponent } from './components/button/button.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    VirtualScrollerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
