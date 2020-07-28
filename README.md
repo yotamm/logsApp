@@ -7,6 +7,7 @@ A build log simulation app
 1. Open a Terminal and change directory to the project folder.
 2. Run `npm run initialize`
 3. Run `npm run start:server` to run the mock server.
+4. In another terminal change directory to the project folder.
 4. Run `npm run start` and navigate to `http://localhost:4200/`.
 
 ## Included Frontend Features
