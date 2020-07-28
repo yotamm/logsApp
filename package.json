@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "initialize": "npm i && cd mock_server && npm i",
     "start": "ng serve",
     "start:server": "cd mock_server && npm run start",
     "build": "ng build",
