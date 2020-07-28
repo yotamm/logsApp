@@ -4,6 +4,7 @@ import {Step} from "../../models/Step.model";
 import {NavigationEnd, Router} from "@angular/router";
 import {Subject} from "rxjs";
 import {filter, takeUntil} from "rxjs/operators";
+import {Status} from "../../models/Status.enum";
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();
 
   constructor(private buildInfoService: BuildInfoService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   requestRebuild() {
     this.buildInfoService.requestRebuild().pipe(takeUntil(this.unsubscribe$)).subscribe(response => {
@@ -29,17 +31,30 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getBuildInfo();
     this.buildInfoService.getLogStream().pipe(takeUntil(this.unsubscribe$)).subscribe(message => {
       if (message.hasOwnProperty('statusUpdate')) {
-        this.getBuildInfo();
+        const callback = (response) => {
+          this.buildInfo = response;
+          this.navigateToLatestRunningBuildStep();
+        };
+        this.getBuildInfo(callback);
       }
     });
 
-    this.router.events.pipe(takeUntil(this.unsubscribe$), filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-      this.getBuildInfo();
-    });
+    this.router.events.pipe(takeUntil(this.unsubscribe$), filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.getBuildInfo();
+      });
   }
 
-  getBuildInfo() {
-    this.buildInfoService.getBuildInfo().pipe(takeUntil(this.unsubscribe$)).subscribe(response => this.buildInfo = response);
+  private getBuildInfo(callback?: (response) => void) {
+    const nextHandler = callback ? callback : (response => this.buildInfo = response);
+    this.buildInfoService.getBuildInfo().pipe(takeUntil(this.unsubscribe$)).subscribe(nextHandler);
+  }
+
+  private navigateToLatestRunningBuildStep() {
+    const stepToMoveTo = this.buildInfo.reduce(((previousValue, currentValue) => {
+      return currentValue.status === Status.inProgress ? currentValue : previousValue;
+    }));
+    this.router.navigate(['build', `${stepToMoveTo.id}`]);
   }
 
   ngOnDestroy(): void {

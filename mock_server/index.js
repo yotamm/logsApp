@@ -13,13 +13,15 @@ const server = http.createServer((request, response) => {
     response.writeHead(200, {'Content-Type': 'application/json'});
     response.writeHead(200, {'Access-Control-Allow-Origin': '*'});
   }
-  if (request.url === '/build-info' && request.method === 'GET') {
-    prepResponse(response);
-    response.end(JSON.stringify(buildSimulator.mockSteps));
-  } else if (request.url === '/restart-build' && request.method === 'GET') {
-    buildSimulator.restartBuild();
-    prepResponse();
-    response.end(JSON.stringify(buildSimulator.mockSteps));
+  if (request.method === 'GET') {
+    if (request.url === '/build-info') {
+      prepResponse();
+      response.end(JSON.stringify(buildSimulator.mockSteps));
+    } else if (request.url === '/restart-build') {
+      buildSimulator.restartBuild();
+      prepResponse();
+      response.end(JSON.stringify(buildSimulator.mockSteps));
+    }
   }
 });
 

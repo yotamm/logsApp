@@ -1,6 +1,7 @@
 "use strict";
 
 const fs = require('fs');
+const jsonData = fs.readFileSync('mock_build.json', 'utf8');
 
 module.exports = class BuildSimulator {
   timeoutIds = [];
@@ -10,7 +11,7 @@ module.exports = class BuildSimulator {
   data;
 
   constructor() {
-    this.buildObj = JSON.parse(fs.readFileSync('mock_build.json', 'utf8'));
+    this.buildObj = JSON.parse(jsonData);
     this.data = this.setMocks(this.buildObj);
   }
 
@@ -30,7 +31,7 @@ module.exports = class BuildSimulator {
 
   sendLogs(connection, stepId) {
     if (stepId !== null && stepId >= 0 && stepId < this.mockSteps.length) {
-      if (this.mockSteps[stepId].status === 'success' || this.mockSteps[stepId].status === 'inProgress' || this.mockSteps[stepId].status === 'failure') {
+      if (["success", "inProgress", "failure"].includes(this.mockSteps[stepId].status)) {
         this.generateLogStreamSimulation(connection, stepId);
       }
     }
