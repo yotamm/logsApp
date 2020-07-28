@@ -1,27 +1,23 @@
 # LogsApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.3.
+A build log simulation app
 
-## Development server
+## Get Started
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm run start:server` to run the mock server.
 
-## Code scaffolding
+Run `npm run start` and navigate to `http://localhost:4200/`.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Included Frontend Features
 
-## Build
+1. An old-school styled log complete with line numbers, ANSI styling, and virtual scrolling.
+2. A pin scroll to bottom button (On by default).
+3. A step status summary and navigation (left pane). The background color of every step reflects its status (Success / Failure / In Progress / Unknown).
+4. A rebuild button that will simulate build progression.
+5. Communication with the server over HTTP & WebSocket.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Included Backend Features
 
-## Running unit tests
+1. Quick-send already performed logs.
+2. A randomized sending time to simulate build progression more realistically.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
